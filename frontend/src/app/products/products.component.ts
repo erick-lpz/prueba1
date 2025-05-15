@@ -52,29 +52,38 @@ export class ProductsComponent implements OnInit {
   }
 
   onQuantityChange(product: Product, event: any): void {
-    const quantity = parseInt(event.target.value, 10); // Convertir a número
-    const currentQuantity = this.cartService.getItems().find(item => item.product.id_product === product.id_product)?.quantity || 0; // Obtener la cantidad actual del producto en el carrito
-  
-    // Calcular la diferencia entre la nueva cantidad y la cantidad actual
+    const quantity = parseInt(event.target.value, 10) || 0;
+    const currentQuantity = this.cartService.getItems().find(item => item.product.id_product === product.id_product)?.quantity || 0;
     const quantityDiff = quantity - currentQuantity;
-  
-    // Actualizar la cantidad del producto en el carrito
+
     if (quantityDiff > 0) {
       this.cartService.addToCart(product, quantityDiff);
     } else if (quantityDiff < 0) {
-      // Si la diferencia es negativa, eliminar la cantidad excedente del carrito
       this.cartService.removeFromCart(product, Math.abs(quantityDiff));
     }
   }
-  
+
+  increaseQuantity(product: Product): void {
+    this.cartService.addToCart(product, 1);
+  }
+
+  decreaseQuantity(product: Product): void {
+    const currentQuantity = this.cartService.getItems().find(item => item.product.id_product === product.id_product)?.quantity || 0;
+    if (currentQuantity > 0) {
+      this.cartService.removeFromCart(product, 1);
+    }
+  }
+
+  getProductQuantity(product: Product): number {
+    return this.cartService.getItems().find(item => item.product.id_product === product.id_product)?.quantity || 0;
+  }
+
   get selectedItems() {
     return this.cartService.getItems();
   }
 
   openModalDetail(productId: number): void {
     let dialogRef;
-    console.log("screen.width", screen.width);
-
     if (screen.width < 500) {
       dialogRef = this.dialog.open(ProductModalComponent, {
         maxWidth: '100vw',
