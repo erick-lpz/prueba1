@@ -19,7 +19,8 @@ from rest_framework.viewsets import ModelViewSet
 from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from django.core.mail import EmailMultiAlternatives
+from rest_framework import status
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from datetime import timedelta
@@ -119,7 +120,7 @@ class PasswordResetRequestView(APIView):
             'reset_url': reset_url,
             'user_first_name': user.first_name,
             'year': timezone.now().year,
-            'logo_url': 'https://postimg.cc/sQKGr0BY',
+            'logo_url': 'https://i.ibb.co/6RPpCJfF/logo-blanco.png" ',
         })
 
         try:
@@ -168,3 +169,43 @@ class PasswordResetConfirmView(APIView):
         user.save()
         print(f"[SUCCESS] Contraseña restablecida para el usuario {user.email}")
         return Response({'message': 'Contraseña restablecida correctamente.'}, status=status.HTTP_200_OK)
+
+class ContactView(APIView):
+    def post(self, request):
+        name = request.data.get('name', '').strip()
+        email = request.data.get('email', '').strip()
+        message = request.data.get('message', '').strip()
+
+        # Validaciones detalladas
+        if not name:
+            return Response({'name': ['El nombre es obligatorio.']}, status=status.HTTP_400_BAD_REQUEST)
+        if len(name) < 4:
+            return Response({'name': ['El nombre debe tener al menos 4 caracteres.']}, status=status.HTTP_400_BAD_REQUEST)
+        if not email:
+            return Response({'email': ['El correo es obligatorio.']}, status=status.HTTP_400_BAD_REQUEST)
+        email_regex = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        if not re.match(email_regex, email):
+            return Response({'email': ['El correo no es válido.']}, status=status.HTTP_400_BAD_REQUEST)
+        if not message:
+            return Response({'message': ['El mensaje es obligatorio.']}, status=status.HTTP_400_BAD_REQUEST)
+        if len(message) < 10:
+            return Response({'message': ['El mensaje debe tener al menos 10 caracteres.']}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Limpieza de mensaje
+        message = re.sub(r'<.*?>', '', message)
+        message = re.sub(r'http[s]?://\S+', '[enlace removido]', message)
+
+        subject = f'Contacto desde la web: {name}'
+        body = f'Nombre: {name}\nEmail: {email}\n\nMensaje:\n{message}'
+
+        try:
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.DEFAULT_FROM_EMAIL],
+                fail_silently=False,
+            )
+            return Response({'detail': '¡Mensaje enviado correctamente!'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'detail': 'Ocurrió un error al enviar el mensaje. Intenta nuevamente más tarde.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
