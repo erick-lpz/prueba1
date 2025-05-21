@@ -6,6 +6,10 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework import status,permissions
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
+from rest_framework.viewsets import ModelViewSet
+from .models import Order
+from .serializers import OrderSerializer
+from rest_framework.permissions import IsAuthenticated
 
 #CREAR ORDENES CON USUARIO AUTENTICADO 
 class CreateOrderView(APIView):
@@ -26,3 +30,10 @@ class UserOrdersView(ListAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         return Order.objects.filter(id_user=user_id)    
+
+class OrderViewSet(ModelViewSet):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)

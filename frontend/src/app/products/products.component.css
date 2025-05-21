@@ -7,7 +7,7 @@
 }
 
 body {
-  background-color: #1a1a1a; /* Deeper dark for premium feel */
+  background-color: #1a1a1a;
   font-family: "Poppins", sans-serif;
   color: #d6d6d6;
   line-height: 1.6;
@@ -29,7 +29,7 @@ body {
 }
 
 .card_section-titulo a {
-  color: #f4c430; /* Gold tone for luxury */
+  color: #f4c430;
   font-family: 'Bangers', cursive;
   font-size: 2rem;
   font-weight: 400;
@@ -226,6 +226,7 @@ body {
 .quantity-input[value="0"] {
   color: #aaa;
 }
+
 .select-prod {
   margin: 3rem auto;
   max-width: 1200px;
@@ -250,35 +251,6 @@ body {
   color: #a3a3a3;
 }
 
-.go_cart {
-  margin: 1.5rem auto;
-  display: inline-block;
-  background: linear-gradient(90deg, #f4c430, #ffd700);
-  color: #1a1a1a;
-  border: none;
-  padding: 0.9rem 2rem;
-  border-radius: 8px;
-  font-family: "Poppins", sans-serif;
-  font-size: 1.2rem;
-  font-weight: 500;
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-align: center;
-}
-
-.go_cart:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(244, 196, 48, 0.5);
-}
-
-.button_slide {
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.slide_right:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(244, 196, 48, 0.5);
-}
-
 /* Responsive adjustments */
 @media (max-width: 769px) {
   .card_section-titulo {
@@ -286,22 +258,17 @@ body {
     gap: 1rem;
     padding: 1rem 0;
   }
-
   #card_section-root {
     padding: 1.5rem 0.5rem;
     gap: 1rem;
   }
-
   .card {
     width: 16rem;
   }
-
   .card-img-top {
     height: 250px;
   }
-
-  .select-prod,
-  .go_cart {
+  .select-prod {
     margin: 1rem;
   }
 }
@@ -310,21 +277,16 @@ body {
   .card_section-titulo h2 {
     font-size: 1.5rem;
   }
-
   .card {
     width: 100%;
   }
-
   .card-img-top {
     height: 200px;
   }
-
   .btn-primary {
     font-size: 0.85rem;
   }
-
-  .select-prod,
-  .go_cart {
+  .select-prod {
     margin: 0.5rem;
   }
 }

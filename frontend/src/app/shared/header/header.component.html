@@ -80,7 +80,12 @@
 
           <li class="nav-item"
           >          
-
+          <li class="cart">
+          <a class="link-cart" routerLink="/cart" routerLinkActive="active">
+          <i id="cart" class="cart fas fa-shopping-cart" [attr.data-totalitems]="totalCartItems"></i>
+          </a>
+          </li>
+          
         </ul>
     </nav>
 </header>

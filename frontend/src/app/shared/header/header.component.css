@@ -18,10 +18,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px; /* Increased horizontal padding */
+    padding: 0 20px;
     background-color: #1e1e1e;
-    z-index: 1000; /* Ensure header stays above other content */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    z-index: 1000; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
 }
 
 /* Navbar container */
@@ -36,7 +36,7 @@ header {
 .logo {
     object-fit: contain;
     width: 140px;
-    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+    transition: transform 0.3s ease; 
 }
   
 .logo:hover {
@@ -51,15 +51,12 @@ header {
     list-style: none;
 }
 
-/* Individual navigation items */
 .nav__links li {
     display: inline-block;
-    padding: 0;
-    margin: 0 15px; /* Even spacing between items */
-    position: relative; /* For potential dropdown menus */
+    padding: 5px;
+    position: relative; 
 }
 
-/* Navigation links */
 .nav__links li a {
     font-family: 'Bangers', sans-serif;
     font-size: 1.5rem;
@@ -71,12 +68,10 @@ header {
     position: relative;
 }
 
-/* Hover effect with underline */
 .nav__links a:hover {
     color: #e5ac57;
 }
 
-/* Add underline effect on hover */
 .nav__links a::after {
     content: '';
     position: absolute;
@@ -106,6 +101,42 @@ label #cancel{
 
 #check{
     display: none;
+}
+
+
+.cart .cart.fas.fa-shopping-cart {
+    color: #ffd700 !important;
+    border-radius: 50%;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    position: relative;
+    transition: box-shadow 0.18s, transform 0.18s, background 0.18s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart .cart.fas.fa-shopping-cart:hover {
+    transform: scale(1.08);
+}
+
+#cart[data-totalitems]:after {
+    content: attr(data-totalitems);
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    background: #ff3e41;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
 }
 
 /* Estilos para dispositivos móviles */
@@ -142,17 +173,17 @@ label #cancel{
     nav ul {
         width: 100%;
         background: #1e1e1e;
-        position: fixed; /* Fixed position instead of absolute */
+        position: fixed; 
         top: 80px;
         left: -100%;
         text-align: center;
-        transition: all 0.3s ease; /* Smoother transition */
+        transition: all 0.3s ease;
         z-index: 100;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-        max-height: calc(100vh - 80px); /* Prevent overflow */
-        overflow-y: auto; /* Allow scrolling if many items */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        max-height: calc(100vh - 80px);
+        overflow-y: auto; 
     }
 
     nav ul li {
@@ -167,7 +198,7 @@ label #cancel{
     }
     
     nav ul li:hover {
-        background-color: rgba(252, 214, 158, 0.1); /* Subtle hover effect */
+        background-color: rgba(252, 214, 158, 0.1); 
     }
     
 

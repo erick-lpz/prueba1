@@ -23,7 +23,26 @@ export class CartComponent implements OnInit {
     this.items = this.cartService.getItems();
   }
 
-  goToPayment() {
+  decrementQuantity(index: number): void {
+    if (this.items[index].quantity > 1) {
+      this.items[index].quantity--;
+      this.cartService.updateItems(this.items);
+    } else {
+      this.removeItem(index);
+    }
+  }
+
+  incrementQuantity(index: number): void {
+    this.items[index].quantity++;
+    this.cartService.updateItems(this.items);
+  }
+
+  removeItem(index: number): void {
+    this.items.splice(index, 1);
+    this.cartService.updateItems(this.items);
+  }
+
+  goToPayment(): void {
     this.router.navigate(['/payment']);
   }
 

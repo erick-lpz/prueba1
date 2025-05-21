@@ -26,6 +26,8 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateCategory(this.selectedCategory);
+    // Inicializar el contador del carrito al cargar la página
+    this.updateCartCounter();
   }
 
   updateCategory(category: string): void {
@@ -61,16 +63,23 @@ export class ProductsComponent implements OnInit {
     } else if (quantityDiff < 0) {
       this.cartService.removeFromCart(product, Math.abs(quantityDiff));
     }
+    
+    // Actualizar el contador después de cambiar la cantidad
+    this.updateCartCounter();
   }
 
   increaseQuantity(product: Product): void {
     this.cartService.addToCart(product, 1);
+    // Actualizar el contador después de aumentar la cantidad
+    this.updateCartCounter();
   }
 
   decreaseQuantity(product: Product): void {
     const currentQuantity = this.cartService.getItems().find(item => item.product.id_product === product.id_product)?.quantity || 0;
     if (currentQuantity > 0) {
       this.cartService.removeFromCart(product, 1);
+      // Actualizar el contador después de disminuir la cantidad
+      this.updateCartCounter();
     }
   }
 
@@ -80,6 +89,20 @@ export class ProductsComponent implements OnInit {
 
   get selectedItems() {
     return this.cartService.getItems();
+  }
+
+  // Método para calcular el total de productos en el carrito
+  getTotalItems(): number {
+    return this.cartService.getItems().reduce((total, item) => total + item.quantity, 0);
+  }
+
+  // Método para actualizar el contador del carrito en el DOM
+  updateCartCounter(): void {
+    const cartElement = document.getElementById('cart');
+    if (cartElement) {
+      const totalItems = this.getTotalItems();
+      cartElement.setAttribute('data-totalitems', totalItems.toString());
+    }
   }
 
   openModalDetail(productId: number): void {
